@@ -44,3 +44,16 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.reviewer} - {self.rating} stars'
+
+
+
+class Payment(models.Model):
+    booking = models.OneToOneField(Booking, on_delete=models.CASCADE, related_name='payment')
+    status = models.CharField(max_length=20, default='Pending')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    chapa_tx_ref = models.CharField(max_length=100, unique=True)
+    chapa_checkout_url = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment for {self.booking} - {self.status}"    
